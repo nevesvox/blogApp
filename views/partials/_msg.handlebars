@@ -1,0 +1,11 @@
+{{!-- Utiliza das variaveis globais para exibir os alertas --}}
+{{!-- Sucesso --}}
+{{#if success_msg }}
+    <div class="alert alert-success">{{ success_msg }}</div>
+{{/if}}
+
+{{!-- Erro --}}
+
+{{#if error_msg }}
+    <div class="alert alert-danger">{{ error_msg }}</div>
+{{/if}}

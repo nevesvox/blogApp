@@ -1,0 +1,17 @@
+Criando o projeto
+
+1º Passo
+    npm i --s express
+
+2º Passo
+    npm i --s express-handlebars
+
+3º Passo
+    npm i body-parser --s
+
+4º Passo
+    npm i --s mongoose
+
+npm i --s express-session
+
+npm i --s connect-flash

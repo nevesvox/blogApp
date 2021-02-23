@@ -1,0 +1,11 @@
+<h2>Categorias:</h2>
+
+<div class="list-group mt-4">
+    {{#each categorias}}
+        <a href="/categorias/{{ slug }}" class="list-group-item list-group-item-action">{{ nome }}</a>
+    {{else}}
+        <div class="mt-4 text-center">
+            <h3>Nenhuma categoria cadastrada!</h3>
+        </div>
+    {{/each}}
+</div>

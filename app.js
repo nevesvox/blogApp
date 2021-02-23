@@ -12,6 +12,8 @@ const flash      = require('connect-flash')
 // Models
 require('./models/Postagem')
 const Postagem = mongoose.model('postagens')
+require('./models/Categoria')
+const Categoria = mongoose.model('categorias')
 
 // Configurações
     // Sessão
@@ -74,6 +76,70 @@ const Postagem = mongoose.model('postagens')
 
     // Admin
     app.use('/admin', admin)
+
+    // Rota responsável por chamar a página da Postagem
+    app.get('/postagem/:slug', (req, res) => {
+        // Reliza a busca da Postagem
+        Postagem.findOne({slug: req.params.slug}).lean()
+        .then((postagem) => {
+            // Verifica se encontrou a mensagem
+            if (postagem) {
+                // Chama a página visualzação de Postagem
+                res.render('postagem/index', {postagem: postagem})
+            } else {
+                // Em caso de erro
+                req.flash('error_msg', 'Esta postagem não existe!')
+                res.redirect('/')
+            }
+        }).catch((err) => {
+            console.log('Erro ao encontrar postagem, tente novamente', err)
+            // Em caso de erro
+            req.flash('error_msg', 'Erro ao encontrar postagem, tente novamente')
+            res.redirect('/')
+        })
+    })
+
+    // Rota responsável por chamar a página de listagem de categorias
+    app.get('/categorias', (req, res) => {
+        // Realiza a busca de Categorias
+        Categoria.find().lean()
+        .then((categorias) => {
+            // Chama a página de Categorias
+            res.render('categorias/index', {categorias: categorias})
+        }).catch((err) => {
+            // Exibe o erro e redireciona á página principal
+            req.flash('error_msg', 'Houve um erro interno ao buscar as Categorias')
+            res.redirect('/')
+        })
+    })
+
+    // Rota responsável pela busca de Postagem por Categoria (filtro)
+    app.get('/categorias/:slug', (req, res) => {
+        Categoria.findOne({slug: req.params.slug}).lean()
+        .then((categoria) => {
+            // Verifica se a Categoria foi encontrada
+            if (categoria) {
+                // Pesquisa todas as postagens que possuem essa categoria
+                Postagem.find({categoria: categoria._id}).lean()
+                .then((postagens) => {
+                    // Chama a página que irá Listar as Postagens da Categoria selecionada
+                    res.render('categorias/postagens', {
+                        postagens: postagens, 
+                        categoria: categoria
+                    })
+                }).catch((err) => {
+                    req.flash('error_msg', 'Houve um erro ao listar as Postagens')
+                    req.redirect('/')
+                })
+            } else {
+                req.flash('error_msg', 'Esta categoria não existe!')
+                res.redirect('/')
+            }
+        }).catch((err) => {
+            req.flash('error_msg', 'Houve um erro interno ao carregar a Categoria!')
+            res.redirect('/')
+        })
+    })
 
 
 // Outros

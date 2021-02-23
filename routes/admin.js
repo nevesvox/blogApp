@@ -208,9 +208,6 @@ const Postagem = mongoose.model('postagens')
     })
 
     router.get('/postagens/edit/:id', (req, res) => {
-        // Inicializa a variavel
-        let buscaCategorias = null
-       
         // Procura o registro pelo id
         Postagem.findOne({_id: req.params.id}).lean()
         .then((postagem) => {
@@ -218,7 +215,10 @@ const Postagem = mongoose.model('postagens')
              // Busca as categorias
             Categoria.find().lean()
             .then((categorias) => {
-                res.render('admin/editPostagem', {postagem: postagem, categorias: categorias})
+                res.render('admin/editPostagem', {
+                    postagem: postagem,
+                    categorias: categorias
+                })
             }).catch((err) => {
                 console.log('Erro ao carregar o formulário!', err)
                 // Exibe o erro

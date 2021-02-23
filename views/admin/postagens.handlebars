@@ -6,15 +6,15 @@
 </a>
 
 {{#each postagens}}
-    <div class="card mt-2">
+    <div class="card mt-4 shadow">
         <div class="card-body">
             <h5 class="card-title">{{ titulo }}</h5>
             <br>
             <p class="card-text"> <b>Categoria:</b> {{ categoria.nome }}</p>
             <p class="card-text"> <b>Slug:</b> {{ slug }}</p>
             <p class="card-text"> <b>Descrição:</b> {{ descricao }}</p>
-            <p class="card-text font-weight-bold">Conteúdo:</p>
-            <p class="card-text">{{ conteudo }}</p>
+            {{!-- <p class="card-text font-weight-bold">Conteúdo:</p>
+            <p class="card-text">{{ conteudo }}</p> --}}
             <small> <b>Data de criação:</b> {{ data }}</small>
           
             <div class="text-right mt-2">

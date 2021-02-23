@@ -15,11 +15,16 @@
     <div class="card-body">
         <h3>{{ titulo }}</h3>
         <p>{{ descricao }}</p>
+        <div class="text-right">
+            <a href="/postagem/{{ slug }}" class="btn btn-primary ">Leia mais</a>
+        </div>
         <hr>
         <small><b>Categoria:</b> {{ categoria.nome }}</small><br>
         <small><b>Data de publicação:</b> {{ data }}</small>
     </div>
 </div>
 {{else}}
-    <h5>Nenhuma postagem</h5>
+    <div class="mt-4 text-center">
+        <h5>Nenhuma postagem</h5>
+    </div>
 {{/each}}

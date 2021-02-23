@@ -4,7 +4,7 @@
 {{/each}}
 
 <h3>Editar Postagem</h3>
-<div class="card">
+<div class="card shadow mt-4">
     <div class="card-body">
         <form action="/admin/postagens/edit" method="POST">
             <input type="hidden" value="{{ postagem._id }}" name="id" id="id">
@@ -18,7 +18,7 @@
             <input type="text" id="descricao" name="descricao" placeholder="Descrição da Postagem" class="form-control" value="{{postagem.descricao}}">
             <br>
             <label for="conteudo">Conteúdo: </label>
-            <textarea type="text" id="conteudo" name="conteudo" placeholder="Conteúdo da Postagem" class="form-control">{{postagem.conteudo}}</textarea>
+            <textarea type="text" id="conteudo" name="conteudo" rows="8" placeholder="Conteúdo da Postagem" class="form-control">{{postagem.conteudo}}</textarea>
             <br>
             <label for="categoria">Categoria: </label>
             {{!-- Armazena o Id da Categoria --}}

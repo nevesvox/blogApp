@@ -4,17 +4,21 @@ const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const mongoose   = require('mongoose')
 const admin      = require('./routes/admin')
-const usuarios    = require('./routes/usuarios')
+const usuarios   = require('./routes/usuarios')
 const path       = require('path')
 const app        = express()
 const session    = require('express-session')
 const flash      = require('connect-flash')
+const passport   = require('passport')
 
 // Models
 require('./models/Postagem')
 const Postagem = mongoose.model('postagens')
 require('./models/Categoria')
 const Categoria = mongoose.model('categorias')
+
+// Authenticação
+require('./config/auth')(passport)
 
 // Configurações
     // Sessão
@@ -25,6 +29,8 @@ const Categoria = mongoose.model('categorias')
             saveUninitialized: true
         }))
 
+        app.use(passport.initialize())
+        app.use(passport.session())
         app.use(flash())
 
     // Middleware
@@ -32,6 +38,8 @@ const Categoria = mongoose.model('categorias')
             // Cria uma Variavel global
             res.locals.success_msg = req.flash('success_msg')
             res.locals.error_msg   = req.flash('error_msg')
+            res.locals.error       = req.flash('error')
+            res.locals.user        = req.user || null
             next()
         })
 

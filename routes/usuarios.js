@@ -2,6 +2,7 @@ const express  = require('express')
 const router   = express.Router()
 const mongoose = require('mongoose')
 const bcryptjs = require('bcryptjs')
+const passport = require('passport')
 
 // Models
 require('../models/Usuario')
@@ -84,6 +85,15 @@ const Usuario = mongoose.model('usuarios')
     // Rota responsável por chamar a página de login
     router.get('/login', (req, res) => {
         res.render('usuarios/login')
+    })
+
+    // Rota responsável pelo login do Usuário
+    router.post('/login', (req, res, next) => {
+        passport.authenticate('local', {
+            successRedirect: '/',
+            failureRedirect: '/usuarios/login',
+            failureFlash: true
+        })(req, res, next)
     })
 
 

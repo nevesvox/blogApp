@@ -17,3 +17,7 @@ npm i --s express-session
 npm i --s connect-flash
 
 npm i --s bcryptjs
+
+npm i --s passport
+
+npm i --s passport-local

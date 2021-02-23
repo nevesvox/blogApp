@@ -4,6 +4,7 @@ const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const mongoose   = require('mongoose')
 const admin      = require('./routes/admin')
+const usuarios    = require('./routes/usuarios')
 const path       = require('path')
 const app        = express()
 const session    = require('express-session')
@@ -74,8 +75,11 @@ const Categoria = mongoose.model('categorias')
         res.send('Erro 404!')
     })
 
-    // Admin
+    // Rotas de Admin
     app.use('/admin', admin)
+
+    // Rotas de Usuários
+    app.use('/usuarios', usuarios)
 
     // Rota responsável por chamar a página da Postagem
     app.get('/postagem/:slug', (req, res) => {

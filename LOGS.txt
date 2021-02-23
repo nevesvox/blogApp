@@ -15,3 +15,5 @@ Criando o projeto
 npm i --s express-session
 
 npm i --s connect-flash
+
+npm i --s bcryptjs

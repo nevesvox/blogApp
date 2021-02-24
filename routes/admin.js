@@ -9,18 +9,21 @@ const Categoria = mongoose.model('categorias')
 require('../models/Postagem')
 const Postagem = mongoose.model('postagens')
 
+// Helpers
+const {admin} = require('../helpers/admin')
+
 // Rotas
     // Rota principal
-    router.get('/', (req, res) => {
+    router.get('/', admin, (req, res) => {
         res.render('admin/index')
     })
 
-    router.get('/posts', (req, res) => {
+    router.get('/posts', admin, (req, res) => {
         res.send('Página de posts')
     })
 
     // Rota responsável por chamar a página de 'Categorias'
-    router.get('/categorias', (req, res) => {
+    router.get('/categorias', admin, (req, res) => {
         // Realiza a busca das categorias
         Categoria.find().sort({date: 'DESC'}).lean()
         .then((categorias) => {
@@ -36,12 +39,12 @@ const Postagem = mongoose.model('postagens')
     })
 
     // Rota responsável por chamar a página de 'Nova Categoria'
-    router.get('/categorias/add', (req, res) => {
+    router.get('/categorias/add', admin, (req, res) => {
         res.render('admin/addCategoria')
     })
 
     // Rota responsável por inserir uma nova categoria no DB
-    router.post('/categorias/nova', (req, res) => {
+    router.post('/categorias/nova', admin, (req, res) => {
 
         // Validação do formulário
         var erros = []
@@ -93,7 +96,7 @@ const Postagem = mongoose.model('postagens')
     })
 
     // Rota responsavel por chamar a página de edição de Categoria
-    router.get('/categorias/edit/:id', (req, res) => {
+    router.get('/categorias/edit/:id', admin, (req, res) => {
         // Procura o registro pelo id
         Categoria.findOne({_id: req.params.id}).lean()
         .then((categoria) => {
@@ -107,7 +110,7 @@ const Postagem = mongoose.model('postagens')
     })
 
     // Rota responsável pela edição da Categoria no DB
-    router.post('/categorias/edit', (req, res) => {
+    router.post('/categorias/edit', admin, (req, res) => {
         Categoria.findOne({_id: req.body.id})
         .then((categoria) => {
             // Atualiza os dados do registro
@@ -131,7 +134,7 @@ const Postagem = mongoose.model('postagens')
     })
 
     // Rota responsável pela exclusão da Categoria no DB
-    router.post('/categorias/deleteCategoria', (req, res) => {
+    router.post('/categorias/deleteCategoria', admin, (req, res) => {
         // Remove a categoria do DB
         Categoria.deleteOne({_id: req.body.id})
         .then(() => {
@@ -145,7 +148,7 @@ const Postagem = mongoose.model('postagens')
     })
 
     // Rota responsável por abrir a página de Lista de Postagens
-    router.get('/postagens', (req, res) => {
+    router.get('/postagens', admin, (req, res) => {
         // Realiza a busca das Postagens
         Postagem.find().populate('categoria').sort({date: 'DESC'}).lean()
         .then((postagens) => {
@@ -160,7 +163,7 @@ const Postagem = mongoose.model('postagens')
         })
     })
 
-    router.get('/postagens/add', (req, res) => {
+    router.get('/postagens/add', admin, (req, res) => {
         // Busca as categorias
         Categoria.find().lean()
         .then((categorias) => {
@@ -175,7 +178,7 @@ const Postagem = mongoose.model('postagens')
     })
 
     // Rota responsável por salvar uma nova postagem no DB
-    router.post('/postagens/nova', (req, res) => {
+    router.post('/postagens/nova', admin, (req, res) => {
         var erros = []
 
         if (req.body.categoria == '0') {
@@ -207,7 +210,7 @@ const Postagem = mongoose.model('postagens')
         }
     })
 
-    router.get('/postagens/edit/:id', (req, res) => {
+    router.get('/postagens/edit/:id', admin, (req, res) => {
         // Procura o registro pelo id
         Postagem.findOne({_id: req.params.id}).lean()
         .then((postagem) => {
@@ -232,7 +235,7 @@ const Postagem = mongoose.model('postagens')
         })
     })
 
-    router.post('/postagens/edit', (req, res) => {
+    router.post('/postagens/edit', admin, (req, res) => {
         Postagem.findOne({_id: req.body.id})
         .then((postagem) => {
             // Atualiza os dados

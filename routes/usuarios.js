@@ -14,6 +14,7 @@ const Usuario = mongoose.model('usuarios')
         res.render('usuarios/registro')
     })
 
+    // Rota responsável por criar o registro do Usuário dentro do DB
     router.post('/registro', (req, res) => {
         // Inicializa o array de erros
         var erros = []
@@ -48,7 +49,8 @@ const Usuario = mongoose.model('usuarios')
                     const novoUsuario = new Usuario({
                         nome: req.body.nome,
                         email: req.body.email,
-                        senha: req.body.senha
+                        senha: req.body.senha,
+                        // admin: 1
                     })
                     // Cria um Hash da senha
                     bcryptjs.genSalt(10, (erro, salt) => {

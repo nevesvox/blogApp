@@ -104,8 +104,5 @@ const Usuario = mongoose.model('usuarios')
         req.flash('success_msg', 'Desconectado com sucesso!')
         res.redirect('/')
     })
-
-
-
-
+    
 module.exports = router

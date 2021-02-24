@@ -98,6 +98,13 @@ const Usuario = mongoose.model('usuarios')
         })(req, res, next)
     })
 
+    // Rota responsável por realizar o Logout do Usuário
+    router.get('/logout', (req, res) => {
+        req.logOut()
+        req.flash('success_msg', 'Desconectado com sucesso!')
+        res.redirect('/')
+    })
+
 
 
 

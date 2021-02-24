@@ -15,7 +15,7 @@
       {{#if user}}
         <div id="admin"></div>
         <li class="nav-item active">
-          <a class="nav-link" href="/usuarios/login">Sair</a>
+          <a class="nav-link" href="/usuarios/logout">Sair</a>
         </li>
       {{else}}
         <li class="nav-item active">
@@ -25,6 +25,7 @@
           <a class="nav-link" href="/usuarios/registro">Cadastro</a>
         </li>
       {{/if}}
+    </ul>
   </div>
 </nav>
 
@@ -45,7 +46,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="/admin/categorias">Manutenção de Categorias</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/admin/postagens">Manutenção de Cadastros</a>
+          <a class="dropdown-item" href="/admin/postagens">Manutenção de Postagens</a>
         </div>
       </li>`
       document.getElementById('admin').appendChild(div);

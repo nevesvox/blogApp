@@ -8,6 +8,8 @@ require('../models/Categoria')
 const Categoria = mongoose.model('categorias')
 require('../models/Postagem')
 const Postagem = mongoose.model('postagens')
+require('../models/Usuario')
+const Usuario = mongoose.model('usuarios')
 
 // Helpers
 const {admin} = require('../helpers/admin')
@@ -210,6 +212,7 @@ const {admin} = require('../helpers/admin')
         }
     })
 
+    // Rota responsável por chamar a página de edição de Postagem
     router.get('/postagens/edit/:id', admin, (req, res) => {
         // Procura o registro pelo id
         Postagem.findOne({_id: req.params.id}).lean()
@@ -235,6 +238,7 @@ const {admin} = require('../helpers/admin')
         })
     })
 
+    // Rota responsável por salvar no DB os dados editados da postagem
     router.post('/postagens/edit', admin, (req, res) => {
         Postagem.findOne({_id: req.body.id})
         .then((postagem) => {
@@ -258,6 +262,8 @@ const {admin} = require('../helpers/admin')
             res.redirect('/admin/postagens')
         })
     })
+
+    // Rota responsavel por deletar uma Postagem
     router.post('/postagens/deletePostagem', (req, res) => {
         Postagem.deleteOne({_id: req.body.id})
         .then(() => {
@@ -267,6 +273,28 @@ const {admin} = require('../helpers/admin')
             console.log('Erro ao excluir Postagem!', err)
             req.flash('error_msg', 'Erro ao excluir Postagem!')
             res.redirect('/admin/postagens')
+        })
+    })
+
+    // Rota responsável por abir a página de Usuários Cadastrados
+    router.get('/usuarios', (req, res) => {
+        Usuario.find().sort({admin: 'DESC'}).lean()
+        .then((usuarios) => {
+            res.render('admin/usuarios', {usuarios: usuarios})
+        }).catch((err) => {
+
+        })
+    })
+    
+    router.post('/usuarios/deleteUsuario', (req, res) => {
+        Usuario.deleteOne({_id: req.body.id})
+        .then(() => {
+            req.flash('success_msg', 'Usuário excluido com sucesso!')
+            res.redirect('/admin/usuarios')
+        }).catch((err) => {
+            console.log('Erro ao excluir Usuário!', err)
+            req.flash('error_msg', 'Erro ao excluir Usuário!')
+            res.redirect('/admin/usuarios')
         })
     })
 

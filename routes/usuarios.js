@@ -50,7 +50,7 @@ const Usuario = mongoose.model('usuarios')
                         nome: req.body.nome,
                         email: req.body.email,
                         senha: req.body.senha,
-                        // admin: 1
+                        admin: 1
                     })
                     // Cria um Hash da senha
                     bcryptjs.genSalt(10, (erro, salt) => {

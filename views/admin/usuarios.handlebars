@@ -1,0 +1,27 @@
+<h2>Lista de Usuários:</h2>
+<hr>
+
+{{#each usuarios}}
+    <div class="card mt-4 shadow">
+        <div class="card-body">
+            {{#if this.admin}}
+                <div class="alert alert-primary text-center" role="alert">Administrador</div>
+            {{/if}}
+            <p class="card-title">Nome: {{ nome }}</p>
+            <p class="card-text">Email: {{ email }}</p>
+
+            <div class="text-right mt-2">
+                <form action="/admin/usuarios/deleteUsuario" method="POST">
+                    <a href="/admin/categorias/edit/{{_id}}" class="btn btn-primary">Editar</a>
+                    <input type="hidden" name="id" value="{{_id}}">
+                    <button type="submit" class="btn btn-danger">Deletar</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+{{else}}
+    <div class="mt-4 text-center">
+        <h4>Nenhuma Usuário registrado!</h4>
+    </div>
+{{/each}}

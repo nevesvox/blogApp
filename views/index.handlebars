@@ -1,5 +1,5 @@
 <div class="jumbotron shadow-lg">
-  <h1 class="display-4">Bem-vindo ao Blog do Node</h1>
+  <h1 class="display-4">Bem-vindo{{#if user}}, {{nome}} {{else}} ao Blog do Node{{/if}}</h1>
   <p class="lead">Este é um Blog simples, desenvolvido com <b>Node.js</b> + <b>Express</b> + <b>MongoDB</b></p>
   {{#unless user}}
     <hr class="my-4">

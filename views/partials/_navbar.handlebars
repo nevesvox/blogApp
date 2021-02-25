@@ -13,6 +13,20 @@
         <a class="nav-link" href="/categorias">Categorias</a>
       </li>
       {{#if user}}
+        {{#if admin}}
+          <li class="nav-item active dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Admin
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/admin/categorias">Manutenção de Categorias</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/admin/postagens">Manutenção de Postagens</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/admin/usuarios">Manutenção de Usuários</a>
+            </div>
+          </li>
+        {{/if}}
         <div id="admin"></div>
         <li class="nav-item active">
           <a class="nav-link" href="/usuarios/logout">Sair</a>
@@ -28,31 +42,3 @@
     </ul>
   </div>
 </nav>
-
-<script>
-  // Verifica se possui o usuario logado
-  if ('{{{user}}}') {
-    // Recupera os dados do User
-    const user = JSON.parse('{{{user}}}')
-    // Verifica se o usuário esta logado e se é um ADM
-    if (typeof user.admin !== undefined && user.admin == 1) {
-      // Cria a Div que insere as opções
-      const div = document.createElement('div');
-      div.innerHTML = `
-      <li class="nav-item active dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Admin
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/admin/categorias">Manutenção de Categorias</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/admin/postagens">Manutenção de Postagens</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/admin/usuarios">Manutenção de Usuários</a>
-        </div>
-      </li>`
-      document.getElementById('admin').appendChild(div);
-    }
-  }
-  
-</script>

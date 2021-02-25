@@ -40,7 +40,16 @@ require('./config/auth')(passport)
             res.locals.success_msg = req.flash('success_msg')
             res.locals.error_msg   = req.flash('error_msg')
             res.locals.error       = req.flash('error')
-            res.locals.user        = JSON.stringify(req.user) || null
+            res.locals.user        = req.user || null
+            res.locals.admin       = false
+            if (res.locals.user !== null) {
+                res.locals.admin = res.locals.user.admin ? true : false
+            }
+            next()
+        })
+
+        app.use((req, res, next) => {
+            // console.log(res.locals.user.admin)
             next()
         })
 

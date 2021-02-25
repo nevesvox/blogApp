@@ -1,0 +1,30 @@
+<div class="card">
+    <div class="card-body">
+        {{#if usuario.admin}}
+             <div class="alert alert-primary text-center" role="alert">Administrador</div>
+        {{/if}}
+        <form action="/admin/usuarios/edit" method="POST">
+            <input type="hidden" name="id" id="id" value="{{ usuario._id }}">
+            <div class="mb-3 mt-4">
+                <label for="nome" class="form-label">Nome:</label>
+                <input type="text" class="form-control" id="nome" name="nome" value="{{ usuario.nome }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ usuario.email }}" disabled required>
+            </div>
+            <br>
+            <hr>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="true" name="admin" id="admin" {{#if usuario.admin}} checked {{/if}}>
+                <label class="form-check-label" for="flexCheckDefault">
+                    Administrador
+                </label>
+            </div>
+            <hr>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Editar Usuário</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -264,7 +264,7 @@ const {admin} = require('../helpers/admin')
     })
 
     // Rota responsavel por deletar uma Postagem
-    router.post('/postagens/deletePostagem', (req, res) => {
+    router.post('/postagens/deletePostagem', admin, (req, res) => {
         Postagem.deleteOne({_id: req.body.id})
         .then(() => {
             req.flash('success_msg', 'Postagem excluida com sucesso!')
@@ -277,7 +277,7 @@ const {admin} = require('../helpers/admin')
     })
 
     // Rota responsável por abir a página de Usuários Cadastrados
-    router.get('/usuarios', (req, res) => {
+    router.get('/usuarios', admin, (req, res) => {
         Usuario.find().sort({admin: 'DESC'}).lean()
         .then((usuarios) => {
             res.render('admin/usuarios', {usuarios: usuarios})
@@ -286,7 +286,8 @@ const {admin} = require('../helpers/admin')
         })
     })
     
-    router.post('/usuarios/deleteUsuario', (req, res) => {
+    // Rota responsável pela exclusão de um Usuário
+    router.post('/usuarios/deleteUsuario', admin, (req, res) => {
         Usuario.deleteOne({_id: req.body.id})
         .then(() => {
             req.flash('success_msg', 'Usuário excluido com sucesso!')
@@ -294,6 +295,43 @@ const {admin} = require('../helpers/admin')
         }).catch((err) => {
             console.log('Erro ao excluir Usuário!', err)
             req.flash('error_msg', 'Erro ao excluir Usuário!')
+            res.redirect('/admin/usuarios')
+        })
+    })
+
+    // Rota responsável por chamar a view de alteração de Usuário
+    router.get('/usuarios/edit/:id', admin, (req, res) => {
+        // Procura o registro pelo id
+        Usuario.findOne({_id: req.params.id}).lean()
+        .then((usuario) => {
+            res.render('admin/editUsuario', {usuario: usuario})
+        }).catch((err) => {
+            console.log('Erro ao buscar Usuario', err)
+            req.flash('error_msg', 'Este Usuário não existe!')
+            res.redirect('/admin/usuarios')
+        })
+    })
+
+    // Rota responsavel por editar dados do usuário no DB
+    router.post('/usuarios/edit', admin, (req, res) => {
+        Usuario.findOne({_id: req.body.id})
+        .then((usuario) => {
+            // Atualiza os dados do Usuário
+            usuario.nome  = req.body.nome
+            usuario.admin = typeof req.body.admin !== 'undefined' ? 1 : 0
+            // Salva as alterações
+            usuario.save()
+            .then(() => {
+                req.flash('success_msg', 'Usuário atualizado com Sucesso!')
+                res.redirect('/admin/usuarios')
+            }).catch((err) => {
+                console.log('Erro ao salvar dados editados Usuário', err)
+                req.flash('error_msg', 'Houve um erro ao atualizar dados do Usuário, tente novamente!')
+                res.redirect('/admin/usuarios')
+            })
+        }).catch((err) => {
+            console.log('Erro ao buscar Usuário', err)
+            req.flash('error_msg', 'Houve um erro ao buscar o Usuário, tente novamente!')
             res.redirect('/admin/usuarios')
         })
     })

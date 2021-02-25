@@ -1,5 +1,6 @@
 # blogApp
 Blog em Node, desenvolvido para estudo e aprofundamento em Node
+
 https://new-blog-nodejs-app.herokuapp.com/
 
 ## Dependencies

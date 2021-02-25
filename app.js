@@ -10,6 +10,7 @@ const app        = express()
 const session    = require('express-session')
 const flash      = require('connect-flash')
 const passport   = require('passport')
+const db         = require('./config/db')
 
 // Models
 require('./models/Postagem')
@@ -54,7 +55,7 @@ require('./config/auth')(passport)
     // Mongoose
         mongoose.Promise = global.Promise
         mongoose.connect(
-            'mongodb://localhost/blogapp',
+            db.mongoURI,
             {useNewUrlParser: true}
         ).then(() => {
             console.log('Conectado ao MongoDB!')
@@ -155,7 +156,7 @@ require('./config/auth')(passport)
 
 
 // Outros
-    const PORT = 8081
+    const PORT = process.env.PORT || 8081
     app.listen(PORT, () => {
         console.log('Servidor rodando! ✔')
     })

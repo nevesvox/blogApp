@@ -4,7 +4,8 @@
   "description": "Blog em Node, desenvolvido para estudo e aprofundamento em Node",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",

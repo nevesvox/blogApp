@@ -21,3 +21,5 @@ npm i --s bcryptjs
 npm i --s passport
 
 npm i --s passport-local
+
+gabriel.neves

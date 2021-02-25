@@ -1,5 +1,5 @@
 if (process.env.NODE_ENV == 'production') {
-    module.exports = {mongoURI: 'mongodb+srv://gabrielneves:Gabriel123!@cluster0.dgu60.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'}
+    module.exports = {mongoURI: process.env.DB_PROD_URI}
 } else {
     module.exports = {mongoURI: 'mongodb://localhost/blogapp'}
 }
